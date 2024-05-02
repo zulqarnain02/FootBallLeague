@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>League Information</title>
+    <style>
+        body {
+          font-family: "Arial", sans-serif;
+          color: white; /* Text color set to white */
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh; /* Full height of the viewport */
+          margin: 0; /* Remove default margin */
+        }
+
+        .container {
+          width: 400px; /* Set a fixed width for the container */
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+          text-align: center;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="tel"] {
+          width: 100%; /* Full width inputs */
+          padding: 10px;
+          margin: 8px 0; /* Margin for spacing */
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          box-sizing: border-box;
+          background-color: #fff; /* White background for inputs */
+          color: black; /* Text color for inputs */
+        }
+
+        input[type="submit"] {
+          background-color: #4caf50; /* Green background for the button */
+          color: white;
+          padding: 12px 20px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          width: 100px; /* Set a fixed width for the button */
+          margin: 10px 0 10px auto; /* Top margin is 10px, right margin is 0, bottom margin is 10px, left margin is auto */
+          display: block; /* Will take the full width of the container */
+        }
+
+        input[type="submit"]:hover {
+          background-color: #45a049; /* Darker green on hover */
+        }
+
+        h2 {
+          color: black;
+          margin-bottom: 30px; /* Space below the heading */
+        }
+
+        label {
+          color: black; /* White color for labels */
+          display: block; /* Block display for labels */
+          text-align: left; /* Align text to the left */
+          padding: 0; /* Remove padding */
+          font-size: 15px;
+          margin-left: 8px;
+        }
+
+        /* Adjustments for form layout */
+        form {
+          display: grid;
+          grid-template-columns: 1fr; /* Single column layout */
+          gap: 10px; /* Spacing between grid items */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Player Information</h2>
+    <form action="#" method="post">
+        <div>
+            <!-- New div for the inputs excluding the submit button -->
+            <label for="firstName">First Name:</label>
+            <input
+                    type="text"
+                    id="firstName"
+                    name="leagueName"
+                    placeholder="Enter first name"
+            />
+
+            <label for="lastName">Last Name:</label>
+            <input
+                    type="text"
+                    id="lastName"
+                    name="leagueName"
+                    placeholder="Enter last name"
+            />
+
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="endDate"
+                   placeholder="Enter your age"/>
+
+            <label for="phoneNo">Phone No:</label>
+            <input type="tel" id="phoneNo" name="endDate"
+                   placeholder="Enter your phone no with country code"/>
+
+
+
+        </div>
+        <input type="submit" value="Create" />
+    </form>
+</div>
+</body>
+</html>

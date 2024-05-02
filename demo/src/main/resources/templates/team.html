@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Team Management</title>
+  <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+  />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <style>
+    body,
+    html {
+      height: 100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    /* Style from the first page */
+    .initial-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      backdrop-filter: blur(5px);
+    }
+    .form-container {
+      z-index: 2;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .form-container input[type="text"] {
+      padding: 10px;
+      margin-right: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+      width: calc(100% - 122px);
+    }
+    .form-container button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .form-container button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Hide the second page content by default */
+    .league-management-content {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+<!-- Initial content with blurred background -->
+<div class="initial-content">
+  <div class="form-container">
+    <input type="text" id="primeryLeagueName" placeholder="Enter League Name" />
+    <button type="button" id="enterButton">Enter</button>
+  </div>
+</div>
+
+<!-- Content from the second page, initially hidden -->
+<div class="league-management-content">
+  <!-- Navbar and the rest of your content here -->
+  <nav class="navbar bg-body-tertiary fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Team management</a>
+      <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasNavbar"
+              aria-controls="offcanvasNavbar"
+              aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div
+              class="offcanvas offcanvas-end"
+              tabindex="-1"
+              id="offcanvasNavbar"
+              aria-labelledby="offcanvasNavbarLabel"
+      >
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Teams</h5>
+          <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="offcanvas"
+                  aria-label="Close"
+          ></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/"
+              >Home</a
+              >
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                      class="nav-link dropdown-toggle"
+                      href="#"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+              >
+                Dropdown
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a
+                          class="dropdown-item"
+                          href="#"
+                          data-bs-toggle="modal"
+                          data-bs-target="#createTeamModal"
+                  >create Team</a
+                  >
+                </li>
+                <li>
+                  <a
+                          class="dropdown-item"
+                          href="#"
+                          data-bs-toggle="modal"
+                          data-bs-target="#removeTeamModal"
+                  >remove Team</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!--  teams detail table-->
+  <div class="container mt-5 pt-5 table-container">
+  </div>
+
+  <!-- Remove Team Modal -->
+  <div class="modal fade" id="removeTeamModal" tabindex="-1" aria-labelledby="removeTeamModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="removeTeamModalLabel">Remove Team</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="removeTeamForm" th:action="@{/removeteam}" method="post">
+            <div class="mb-3">
+              <label for="teamName" class="col-form-label">Team Name:</label>
+              <input type="text" class="form-control" id="removeteamName" name="teamName">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" form="removeTeamForm" class="btn btn-danger">Remove</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Add Team Modal -->
+  <div class="modal fade" id="createTeamModal" tabindex="-1" aria-labelledby="createTeamModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createTeamModalLabel">Create Team</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="createTeamForm">
+            <div class="mb-3">
+              <label for="teamName" class="col-form-label">Team Name:</label>
+              <input type="text" class="form-control" id="teamName" name="teamName">
+            </div>
+            <div class="mb-3">
+              <input type="hidden" id="leagueId" name="leagueId">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" id="teamButton">Add</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+
+<script>
+  document.getElementById('enterButton').addEventListener('click', function() {
+      // Get the league name entered by the user
+      const leagueName = document.getElementById("primeryLeagueName").value;
+      console.log(leagueName);
+      // Send a POST request to enterLeague endpoint to get the league ID
+      jQuery.post("/enterLeague", { leagueName: leagueName }, function(data, status) {
+          if (status === "success") {
+              // On success, hide the initial content and show the league management content
+              document.querySelector('.initial-content').style.display = 'none';
+              document.querySelector('.league-management-content').style.display = 'block';
+
+              // Display teams for the entered league
+              console.log(data);
+              document.getElementById("leagueId").value=data;
+              displayTeams(+data);
+          } else {
+              // Handle error
+              alert("Error: League not found");
+          }
+      });
+  });
+
+  // Function to display teams for a given league
+  function displayTeams(leagueId) {
+      // Send a GET request to getTeamsByLeague endpoint to fetch teams for the entered league
+      console.log(typeof leagueId)
+      jQuery.get("/getTeamsByLeague", { leagueId: leagueId }, function(data, status) {
+          console.log(data);
+          if (status === "success") {
+              // Display teams in a table
+              const tableContainer = document.querySelector('.table-container');
+              const tableHtml = "<table class='table'><thead><tr><th>Team Name</th><th>Team ID</th></tr></thead><tbody>"
+                  + data.map(team => "<tr><td>" + team.teamName + "</td><td>" + team.teamID + "</td></tr>").join("")
+                  + "</tbody></table>";
+              tableContainer.innerHTML = tableHtml;
+          } else {
+              // Handle error
+              alert("Error: Failed to fetch teams");
+          }
+      });
+  }
+
+  // Submit handler for adding a new team
+  document.getElementById("teamButton").addEventListener('click', function() {
+      event.preventDefault();
+      const teamName = document.getElementById("teamName").value;
+      const leagueId = document.getElementById("leagueId").value;
+
+      console.log(teamName);
+      console.log(leagueId);
+
+      // Send a POST request to addTeam endpoint to add the new team
+      jQuery.post("/addTeam", { teamName: teamName, leagueId: leagueId }, function(data, status) {
+          if (status === "success") {
+              // Reload the page to display updated teams
+              window.location.reload();
+          } else {
+              // Handle error
+              alert("Error: Failed to add team");
+          }
+      });
+  });
+</script>
+
+</html>
