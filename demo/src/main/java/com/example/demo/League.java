@@ -54,5 +54,4 @@ public class League {
         this.endDate = endDate;
     }
 
-
 }
